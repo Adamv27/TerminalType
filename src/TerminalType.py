@@ -3,7 +3,6 @@ import curses
 from curses import wrapper
 
 
-
 class TerminalType:
     def __init__(self, win: curses.window):
         self.win = win
@@ -15,6 +14,8 @@ class TerminalType:
         self.win.clear()
         
         self.win.addstr(0, 0, 'Characters')
+        
+        self.win.addstr(0, len('characters') + 1, 'Test type')
         self.win.refresh()
 
         selected = False
