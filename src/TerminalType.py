@@ -1,6 +1,7 @@
 import time
 import curses
 from curses import wrapper
+from Settings import Settings
 
 
 class TerminalType:
@@ -9,6 +10,20 @@ class TerminalType:
         self.win_x, self.win_y = self.win.getmaxyx()
         self.test_length = 15
     
+    def menu(self):
+        self.win.clear()        
+        self.settings = Settings(self.win) 
+        self.win.move(0, 0) 
+        while True:
+            key = self.win.getkey()
+            
+            if key == 'KEY_RIGHT':
+                self.settings.move_right()
+            elif key == 'KEY_LEFT':
+                self.settings.move_left()
+
+        self.win.getch()
+
 
     def typing_test(self):
         self.win.clear()
@@ -37,7 +52,7 @@ class TerminalType:
 def main(win):
     curses.start_color()
     terminalType = TerminalType(win)
-    terminalType.typing_test()
+    terminalType.menu()
 
 
 if __name__ == '__main__':
