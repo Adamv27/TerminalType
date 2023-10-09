@@ -17,7 +17,7 @@ class Settings:
         
         position = [1, 1]
         test_options = [MenuOption('15s', False),
-                        MenuOption('30s', False),
+                        MenuOption('30s', True),
                         MenuOption('60s', False),
                         MenuOption('30 Words', False),
                         MenuOption('100 Words', False)]
