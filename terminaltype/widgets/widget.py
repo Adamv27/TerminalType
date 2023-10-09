@@ -19,13 +19,16 @@ class Widget:
     def move_cursor_to_start(self):
         self.win.move(self.y, self.x)
 
-    def hovering(self, is_hovering):
+    def set_hovering(self, is_hovering):
         self.is_hovering = is_hovering
     
     def select(self):
         pass
 
     def render(self):
-        style = curses.A_UNDERLINE if self.is_hovering else curses.A_NORMAL
+        style = curses.A_DIM if self.is_hovering else curses.A_NORMAL
         self.win.addstr(self.y, self.x, self.title, style) 
+    
+    def update(self):
+        self.render()
 
