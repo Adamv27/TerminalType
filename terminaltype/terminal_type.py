@@ -13,18 +13,10 @@ class TerminalType:
     def menu(self):
         self.win.clear()        
         self.settings = Settings(self.win) 
-        self.win.move(0, 0) 
         while True:
             key = self.win.getkey()
-            
-            if key == 'KEY_RIGHT':
-                self.settings.move_right()
-            elif key == 'KEY_LEFT':
-                self.settings.move_left()
-            elif key == '\n':
-                self.settings.toggle_selected()
-            elif key == 'q':
-                break
+            self.settings.handle_key(key)
+                   
 
     def typing_test(self):
         self.win.clear()
