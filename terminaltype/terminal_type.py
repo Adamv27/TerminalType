@@ -1,7 +1,6 @@
 import time
 import curses
-from curses import wrapper
-from settings import Settings
+from terminaltype.settings import Settings
 
 
 class TerminalType:

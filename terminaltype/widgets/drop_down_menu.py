@@ -1,14 +1,14 @@
 import curses
-from widgets.widget import Widget 
-from widgets import SYMBOLS, MenuOption
+from terminaltype.widgets.widget import Widget
+from terminaltype.widgets import SYMBOLS, MenuOption
 
 
 class DropDownMenu(Widget):
-    def __init__(self, 
+    def __init__(self,
                  win,
                  pos: list[int],
                  title: str,
-                 options: list[MenuOption], 
+                 options: list[MenuOption],
                  can_select_multiple=False):
 
         super().__init__(win, pos, title)
@@ -32,26 +32,26 @@ class DropDownMenu(Widget):
         for index, option in enumerate(self.options, start=1):
             symbol = SYMBOLS['toggle-on'] if option.is_selected else SYMBOLS['toggle-off']
             option_title = f'{symbol}  {option.name}'
-             
+
             style = curses.A_DIM if index - 1 == self.selected_index else curses.A_NORMAL 
             self.win.addstr(self.y + index, self.x, option_title, style)
         self.move_cursor_to_start()
         self.expanded = True
-        
+
     def close(self):
         for index in range(1, len(self.options) + 1):
             self.win.move(self.y + index, self.x)
-            self.win.clrtoeol() 
+            self.win.clrtoeol()
         self.move_cursor_to_start()
         self.expanded = False
-    
+
     def is_expanded(self):
         return self.expanded
-   
+
     def shift_cursor_vertically(self, offset):
         if not self.is_expanded():
             return
-        
+
         new_index = self.selected_index + offset
         if new_index >= -1 and new_index < len(self.options):
             self.set_hovering(False)
@@ -68,7 +68,7 @@ class DropDownMenu(Widget):
         option = self.options[self.selected_index]
         option.is_selected = not option.is_selected
         self.update()
-    
+
     def update(self):
         self.render()
         if self.is_expanded():

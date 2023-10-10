@@ -7,8 +7,6 @@ class Widget:
         self.y, self.x = pos
         self.title = title
         self.is_hovering = False
-        
-        self.render()
 
     def get_title_width(self):
         return len(self.title) + 1

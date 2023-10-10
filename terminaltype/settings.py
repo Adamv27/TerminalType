@@ -1,40 +1,41 @@
 import sys
-import curses
-from widgets import MenuOption
-from widgets.drop_down_menu import DropDownMenu 
+from terminaltype.widgets import MenuOption
+from terminaltype.widgets.drop_down_menu import DropDownMenu
 
 
 class Settings:
     def __init__(self, win):
-        self.win = win 
-        
+        self.win = win
+
         self.menus = []
         self.selected_index = 0
         self.setup_menus()
 
     def setup_menus(self):
         self.win.move(1, 1)
-        
+
         position = [1, 1]
         test_options = [MenuOption('15s', False),
                         MenuOption('30s', True),
                         MenuOption('60s', False),
                         MenuOption('30 Words', False),
                         MenuOption('100 Words', False)]
-        test_type = DropDownMenu(self.win, position, "Test Type", test_options) 
+        test_type = DropDownMenu(self.win, position, "Test Type", test_options)
+        test_type.update()
         position[1] += test_type.get_title_width()
 
-        character_options = [MenuOption('Capitals', True), 
-                             MenuOption('Special', False), 
+        character_options = [MenuOption('Capitals', True),
+                             MenuOption('Special', False),
                              MenuOption('Punctuation', True)]
         characters = DropDownMenu(self.win, position, 'Characters', character_options, can_select_multiple=True)
+        characters.update()
         self.menus = [test_type, characters]
         self.__move_to_menu(0)
-       
+
     def toggle_selected(self):
         menu = self.menus[self.selected_index]
-        menu.select()        
-    
+        menu.select()
+
     def shift_cursor_horizontally(self, offset):
         if self.menus[self.selected_index].is_expanded():
             return
@@ -51,8 +52,8 @@ class Settings:
         new_menu = self.menus[self.selected_index]
         new_menu.set_hovering(True)
         new_menu.update()
-        new_menu.move_cursor_to_start() 
-    
+        new_menu.move_cursor_to_start()
+
     def handle_key(self, key):
         match key:
             case 'q':
@@ -62,9 +63,8 @@ class Settings:
             case 'KEY_RIGHT':
                 self.shift_cursor_horizontally(1)
             case 'KEY_UP':
-                self.menus[self.selected_index].shift_cursor_vertically(-1) 
+                self.menus[self.selected_index].shift_cursor_vertically(-1)
             case 'KEY_DOWN':
                 self.menus[self.selected_index].shift_cursor_vertically(1)
             case '\n':
                 self.toggle_selected()
-        
